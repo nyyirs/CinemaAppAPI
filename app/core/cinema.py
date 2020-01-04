@@ -1,12 +1,15 @@
 import requests
 from bs4 import BeautifulSoup
+import re
 
 
 class Theaters():
 
     def __init__(self):
 
-        self.movies = {}
+        self.movieList = {}
+        self.movieDetails = []
+        self.movieInfo = {}
 
     def getMovieList(self, url):
 
@@ -21,13 +24,38 @@ class Theaters():
             for index, item in enumerate(results):
                 title = item.find('a')
                 img = item.find('img')
-                self.movies[index] = {
+                self.movieList[index] = {
                     'title': title.get('title'),
                     'img': img.get('src'),
                     'details': title.get('href')
                 }
 
-            return (self.movies)
+            return (self.movieList)
+
+        except:
+
+            return ('Error - unable to retrieve information from source')
+
+    def getMovieDetail(self, url, className):
+        self.movieDetails = []
+        try:
+            page = requests.get(url)
+
+            soup = BeautifulSoup(page.content, 'html.parser')
+
+            results = soup.find(
+                'div', id=className).find_all('td')
+
+            for item in results:
+
+                data = item.findChildren(text=True)
+
+                data = [re.sub('[^a-zA-Z0-9]+', '', _) for _ in data]
+
+                data = ' '.join(data).split()
+                self.movieDetails.append(data)
+
+            return (self.movieDetails)
 
         except:
 
