@@ -12,7 +12,7 @@ class Theaters():
         self.movieInfo = {}
 
     def getMovieList(self, url):
-
+        self.movieList = {}
         try:
             page = requests.get(url)
 
@@ -49,13 +49,24 @@ class Theaters():
             for item in results:
 
                 data = item.findChildren(text=True)
-
                 data = [re.sub('[^a-zA-Z0-9]+', '', _) for _ in data]
-
                 data = ' '.join(data).split()
                 self.movieDetails.append(data)
 
-            return (self.movieDetails)
+            composite_list = [self.movieDetails[x:x+3]
+                              for x in range(0, len(self.movieDetails), 3)]
+
+            for index, item in enumerate(composite_list):
+
+                self.movieInfo[index] = {
+
+                    'Date': item[0][0],
+                    'Room': item[1][0],
+                    'Time': item[2]
+
+                }
+
+            return (self.movieInfo)
 
         except:
 
