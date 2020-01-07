@@ -3,4 +3,4 @@ from rest_framework import serializers
 
 class MovieDetailSerializer(serializers.Serializer):
 
-    movieUrl = serializers.CharField()
+    movieNumb = serializers.IntegerField()

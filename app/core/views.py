@@ -21,8 +21,8 @@ class BagatelleView(APIView):
 
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            movieUrl = serializer.validated_data.get('movieUrl')
-            return Response({'MovieInfo': theaters.getMovieDetail(movieUrl, 'accordion-07-body-19')})
+            movieNumb = serializer.validated_data.get('movieNumb')
+            return Response({'MovieInfo': theaters.getMovieDetail(movieNumb, 'accordion-07-body-19')})
         else:
             return Response(
                 serializer.errors,
@@ -42,8 +42,8 @@ class TrianonView(APIView):
 
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            movieUrl = serializer.validated_data.get('movieUrl')
-            return Response({'MovieInfo': theaters.getMovieDetail(movieUrl, 'accordion-07-body-23')})
+            movieNumb = serializer.validated_data.get('movieNumb')
+            return Response({'MovieInfo': theaters.getMovieDetail(movieNumb, 'accordion-07-body-23')})
         else:
             return Response(
                 serializer.errors,
@@ -63,8 +63,8 @@ class CaudanView(APIView):
 
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            movieUrl = serializer.validated_data.get('movieUrl')
-            return Response({'MovieInfo': theaters.getMovieDetail(movieUrl, 'accordion-07-body-10')})
+            movieNumb = serializer.validated_data.get('movieNumb')
+            return Response({'MovieInfo': theaters.getMovieDetail(movieNumb, 'accordion-07-body-10')})
         else:
             return Response(
                 serializer.errors,
@@ -84,8 +84,8 @@ class FlacqView(APIView):
 
         serializer = self.serializer_class(data=request.data)
         if serializer.is_valid():
-            movieUrl = serializer.validated_data.get('movieUrl')
-            return Response({'MovieInfo': theaters.getMovieDetail(movieUrl, 'accordion-07-body-24')})
+            movieNumb = serializer.validated_data.get('movieNumb')
+            return Response({'MovieInfo': theaters.getMovieDetail(movieNumb, 'accordion-07-body-24')})
         else:
             return Response(
                 serializer.errors,

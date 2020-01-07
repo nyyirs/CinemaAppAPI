@@ -36,9 +36,15 @@ class Theaters():
 
             return ('Error - unable to retrieve information from source')
 
-    def getMovieDetail(self, url, className):
+    def getMovieDetail(self, movieNumb, className):
         self.movieDetails = []
+        self.movieInfo = {}
         try:
+
+            url = self.movieList[movieNumb]['details']
+
+            print(url)
+
             page = requests.get(url)
 
             soup = BeautifulSoup(page.content, 'html.parser')
