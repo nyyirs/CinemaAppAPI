@@ -1,5 +1,5 @@
 FROM python:3.7.6-alpine3.10
-LABEL Key = 'Nyyir'
+LABEL Key = "Nyyir"
 
 ENV PYTHONUNBUFFERED 1
 
