@@ -14,4 +14,27 @@
   <img alt="PyPI" src="https://img.shields.io/pypi/v/requests?color=Green&label=Requests">
 </p>
 
-## Overview
+# Overview
+
+<p>A Web Service carefully crafted to serve as a backend for a Mobile Application. It relies heavily on web scraping technology to harvest data from a known website and transforms them into readable JSON format.</p>
+
+<p>The REST API is hosted on AWS with the help of Docker images</p>
+
+
+```bash
+# Pull docker image from docker hub
+docker pull nyyirs/cinema-rest-api
+
+```
+
+```bash
+# Run the docker image
+docker run -d -p 8000:8000 cinema-rest-api python /app/manage.py runserver 0.0.0.0:8000
+
+```
+
+# Features
+
+
+
+
