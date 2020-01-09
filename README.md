@@ -1,6 +1,6 @@
 <h1 align="center">
   <br>
-  <img src="https://i.dlpng.com/static/png/5255473-photographic-film-movie-camera-black-log-card-camera-icon-png-film-camera-png-900_640_preview.png" alt="Markdownify" width="150">
+  <img src="https://pngimage.net/wp-content/uploads/2018/06/rolo-de-filme-cinema-vector-png-2.png" alt="Markdownify" width="150">
   <br>
   Cinema Rest API
   <br>
