@@ -35,6 +35,16 @@ docker run -d -p 8000:8000 cinema-rest-api python /app/manage.py runserver 0.0.0
 
 # Features
 
+* Extract Movie:
+  - Title
+  - Poster Image
+  - Movie Details Link
+  - Date and Time 
+  - Hall
+  - Language (Original or French Version)
+  - 2D or 3D
+
+
 
 
 
