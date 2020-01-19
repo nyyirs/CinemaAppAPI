@@ -1,96 +1,66 @@
 import requests
 from bs4 import BeautifulSoup
+import http.client
 import re
 
+http.client._MAXHEADERS = 1000
 
-class Theaters():
 
-    def __init__(self):
+def getMovieDetails(url):
+    try:
+        # Get each movile link
 
-        self.movieList = {}
-        self.movieDetails = []
-        self.movieInfo = {}
+        page = requests.get(url)
 
-    def getMovieList(self, url):
-        self.movieList = {}
-        try:
-            page = requests.get(url)
+        soup = BeautifulSoup(page.content, 'html.parser')
 
-            soup = BeautifulSoup(page.content, 'html.parser')
+        links = soup.find_all(
+            'a', class_='vh_button yellow icon-play-1 hover_right')
 
-            results = soup.find_all(
-                'figure', class_='text-center u-block-hover mb-0')
+        movieLinks = []
 
-            for index, item in enumerate(results):
-                title = item.find('a')
-                img = item.find('img')
-                self.movieList[index] = {
-                    'title': title.get('title'),
-                    'img': img.get('src'),
-                    'details': title.get('href')
-                }
+        for elem in links:
 
-            return (self.movieList)
+            movieLinks.append('https://cinema.mu' + elem.get('href'))
 
-        except:
+        # Navigate to individual movie page
 
-            return ('Error - unable to retrieve information from source')
+        movieInfo = {}
 
-    def getMovieDetail(self, movieNumb, className):
-        self.movieDetails = []
-        self.movieInfo = {}
-        try:
-
-            url = self.movieList[movieNumb]['details']
-
-            print(url)
+        for index, url in enumerate(movieLinks):
 
             page = requests.get(url)
 
             soup = BeautifulSoup(page.content, 'html.parser')
 
-            results = soup.find(
-                'div', id=className).find_all('td')
+            title = soup.find('div', class_='page_title event').string
+            duration = soup.find('div', class_='info movies_length').string
+            image = soup.find('img', class_='open_entry_image').get('src')
+            try:
+                rating = soup.find(
+                    'div', class_='info event_imdb_rating').string
+            except:
+                rating = 'N/A'
 
-            for item in results:
+            schedules = soup.find('div', class_='panel-body').find_all('td')
+            showTimes = []
+            for time in schedules:
 
-                data = item.findChildren(text=True)
+                data = time.findChildren(text=True)
                 data = [re.sub('[^a-zA-Z0-9]+', '', _) for _ in data]
                 data = ' '.join(data).split()
-                self.movieDetails.append(data)
+                showTimes.append(data)
 
-            composite_list = [self.movieDetails[x:x+3]
-                              for x in range(0, len(self.movieDetails), 3)]
+            movieInfo[index] = {
 
-            for index, item in enumerate(composite_list):
+                'title': title,
+                'image': 'https://cinema.mu/' + image,
+                'rating': rating,
+                'duration': duration,
+                'showTimes': showTimes
 
-                self.movieInfo[index] = {
+            }
 
-                    'Date': item[0][0],
-                    'Room': item[1][0],
-                    'Time': item[2]
-
-                }
-
-            return (self.movieInfo)
-
-        except:
-
-            return ('Error - unable to retrieve information from source')
-
-    def bagatelle(self):
-
-        return (self.getMovieList(
-            'https://www.myt.mu/sinformer/cinema/les-salles/19/cinema-star-bagatelle'))
-
-    def trianon(self):
-
-        return (self.getMovieList('https://www.myt.mu/sinformer/cinema/les-salles/23/cinema-mcine'))
-
-    def caudan(self):
-
-        return (self.getMovieList('https://www.myt.mu/sinformer/cinema/les-salles/10/cinema-star-caudan'))
-
-    def flacq(self):
-
-        return (self.getMovieList('https://www.myt.mu/sinformer/cinema/les-salles/24/cinema-mcineflacq'))
+        return (movieInfo)
+    except:
+        return ('Error: unable to retrieve information')

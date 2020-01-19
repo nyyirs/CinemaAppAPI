@@ -1,93 +1,31 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from . import cinema, serializers
+from . import cinema as m
 
 
 # Create your views here.
 
-theaters = cinema.Theaters()
-
-
 class BagatelleView(APIView):
-
-    serializer_class = serializers.MovieDetailSerializer
 
     def get(self, request, format=None):
 
-        return Response({'Movies': theaters.bagatelle()})
-
-    def post(self, request):
-
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            movieNumb = serializer.validated_data.get('movieNumb')
-            return Response({'MovieInfo': theaters.getMovieDetail(movieNumb, 'accordion-07-body-19')})
-        else:
-            return Response(
-                serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST
-            )
+        return Response({'Movies': m.getMovieDetails('https://cinema.mu/cinema-movie-theatres-in-mauritius/star-cinema-bagatelle/')})
 
 
 class TrianonView(APIView):
-
-    serializer_class = serializers.MovieDetailSerializer
-
     def get(self, request, format=None):
 
-        return Response({'Movies': theaters.trianon()})
-
-    def post(self, request):
-
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            movieNumb = serializer.validated_data.get('movieNumb')
-            return Response({'MovieInfo': theaters.getMovieDetail(movieNumb, 'accordion-07-body-23')})
-        else:
-            return Response(
-                serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST
-            )
+        return Response({'Movies': m.getMovieDetails('https://cinema.mu/cinema-movie-theatres-in-mauritius/cinema-mcine-trianon/')})
 
 
 class CaudanView(APIView):
-
-    serializer_class = serializers.MovieDetailSerializer
-
     def get(self, request, format=None):
 
-        return Response({'Movies': theaters.caudan()})
-
-    def post(self, request):
-
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            movieNumb = serializer.validated_data.get('movieNumb')
-            return Response({'MovieInfo': theaters.getMovieDetail(movieNumb, 'accordion-07-body-10')})
-        else:
-            return Response(
-                serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST
-            )
+        return Response({'Movies': m.getMovieDetails('https://cinema.mu/cinema-movie-theatres-in-mauritius/star-cinema-le-caudan/')})
 
 
 class FlacqView(APIView):
-
-    serializer_class = serializers.MovieDetailSerializer
-
     def get(self, request, format=None):
 
-        return Response({'Movies': theaters.flacq()})
-
-    def post(self, request):
-
-        serializer = self.serializer_class(data=request.data)
-        if serializer.is_valid():
-            movieNumb = serializer.validated_data.get('movieNumb')
-            return Response({'MovieInfo': theaters.getMovieDetail(movieNumb, 'accordion-07-body-24')})
-        else:
-            return Response(
-                serializer.errors,
-                status=status.HTTP_400_BAD_REQUEST
-            )
+        return Response({'Movies': m.getMovieDetails('https://cinema.mu/cinema-movie-theatres-in-mauritius/mcine-flacq/')})
