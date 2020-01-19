@@ -44,6 +44,12 @@ docker run -d -p 8000:8000 cinema-rest-api python /app/manage.py runserver 0.0.0
   - Language (Original or French Version)
   - 2D or 3D
 
+# Properly rebuild a docker file
+```bash
+docker rmi --force nyyirs/cinema-rest-api:latest
+docker build -t nyyirs/cinema-rest-api:latest . --no-cache
+docker push nyyirs/cinema-rest-api:latest
+```
 
 
 
