@@ -34,7 +34,10 @@ def getMovieDetails(url):
             soup = BeautifulSoup(page.content, 'html.parser')
 
             title = soup.find('div', class_='page_title event').string
-            duration = soup.find('div', class_='info movies_length').string
+            try:
+                duration = soup.find('div', class_='info movies_length').string
+            except:
+                duration = 'N/A'
             image = soup.find('img', class_='open_entry_image').get('src')
             try:
                 rating = soup.find(
@@ -62,5 +65,5 @@ def getMovieDetails(url):
             }
 
         return (movieInfo)
-    except:
-        return ('Error: unable to retrieve information')
+    except Exception as e:
+        return ('Error: ' + str(e))
