@@ -41,7 +41,7 @@ def getMovieDetails(url):
             image = soup.find('img', class_='open_entry_image').get('src')
             try:
                 rating = soup.find(
-                    'div', class_='info event_imdb_rating').string
+                    'div', class_='info event_imdb_rating').text
             except:
                 rating = 'N/A'
 
